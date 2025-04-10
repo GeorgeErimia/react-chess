@@ -59,7 +59,7 @@ export const createboard = (fenString) => {
     for(let i = 0; i < rows.length; i++) {
         const row = rows[i];
         for(let j = 0; j < columns.length; j++) {
-            const col = columns[i];
+            const col = columns[j];
             cells.push(col + row);
             // NOTE: The cells array will start from the top left (a8) and end on the bottom right (h1);
         }

@@ -1,5 +1,5 @@
 import React from "react";
-import './board-style.css';
+import './board-styles.css';
 
 const Board = ({cells}) => {
     return (
