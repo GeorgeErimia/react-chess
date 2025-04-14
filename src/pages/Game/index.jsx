@@ -21,8 +21,22 @@ const Game = () => {
         setBoard(createboard(fen));
     }, [fen]);
 
+    // Ref object to store the initial position of a piece
+    const fromPos = useRef();
+
+    const makeMove = (pos) => {
+        const from = fromPos.current;
+        const to = pos;
+        chess.move({from, to});
+        setFen(chess.fen());
+    }
+
+    // Setter method to set the fromPos's current property
+    const setFromPos = (pos) => (fromPos.current = pos);
+
+
     return <div className='game'>
-        <Board cells={board} />
+        <Board cells={board} setFromPos={setFromPos} makeMove={makeMove}/>
     </div>
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import "./piece-styles.css";
-import PropTypes from "prop-types";
-
+import PropTypes, { element } from "prop-types";
+import { useRef } from "react";
 /**
  * Piece Component:
  * A piece is extracted from the FEN and converted into a Piece object.
@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
  * Uppercase letter - White piece (e.g:  R -> white rook)
  * Lowercase letter - Black piece (e.g:  k > black king)
  */
-const Piece = ({ name, pos }) => {
+const Piece = ({ name, pos, setFromPos }) => {
   // Calculate the color by checking for the uppercase letter
   const color = name === name.toUpperCase() ? "w" : "b";
 
@@ -22,6 +22,8 @@ const Piece = ({ name, pos }) => {
    */
   const imageName = color + name.toUpperCase(); // This is the image name that we need to search for
 
+  const element = useRef();
+
   let imageSrc;
 
   try {
@@ -30,12 +32,27 @@ const Piece = ({ name, pos }) => {
     imageSrc = require(`../../resources/pieces/empty.png`);
   }
 
-  return <img className="piece" src={imageSrc} alt="" draggable={true} />;
+  const handleDragStart = () => {
+    setFromPos(pos);
+    setTimeout(() => {
+      element.current.style.display = 'none';
+    }, 0);
+  }
+
+  const handleDragEnd = () => {
+    element.current.style.display = 'block';
+  }
+
+  return <img className="piece" src={imageSrc} alt="" draggable={true}
+  ref={element} 
+  onDragStart={handleDragStart}
+  onDragEnd={handleDragEnd}/>;
 };
 
 Piece.prototype = {
   name: PropTypes.string.isRequired,
   pos: PropTypes.string.isRequired,
+  setFromPos: PropTypes.func.isRequired,
 };
 
 export default Piece;

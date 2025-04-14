@@ -8,6 +8,11 @@
     height: calc((100vh * 0.85) / 9.5);
 }
 
+.cell > * {
+    width: inherit;
+    height: inherit;
+}
+
 .light {
     background-color: rgb(235, 228, 219);
 }
